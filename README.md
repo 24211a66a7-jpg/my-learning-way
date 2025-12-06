@@ -1,73 +1,186 @@
-# Welcome to your Lovable project
+<!--
+  New comprehensive README for the Sign Language demo.
+  Includes inline Mermaid diagrams and references to simple SVG infographics
+  placed in `public/images/`.
+-->
 
-## Project info
+# Assistive Sign Language — Demo & Project Overview
 
-**URL**: https://lovable.dev/projects/310ba437-80f5-4b82-9c6a-e42ddb588d65
+Demo: https://assited.netlify.app/
 
-## How can I edit this code?
+Welcome — this website the demo version of the Assistive Sign Language app: its purpose, architecture, usage, tech stack, APIs and realtime integrations, and visual infographics. The README intentionally includes both Mermaid diagrams (for quick edit/view) and SVG placeholders (in `public/images/`) that you can replace with designed assets.
 
-There are several ways of editing your application.
+**Quick Links**
+- Demo: `https://assited.netlify.app/`
+- Live infographics: `/images/infographic-flow.svg` and `/images/architecture-map.svg`
 
-**Use Lovable**
+**Goals of this Demo**
+- Demonstrate real-time sign-language detection and translation.
+- Showcase accessibility-first assistive tools: captioning, TTS, STT, voice commands, and text simplification.
+- Provide a production-like UI for stakeholder review and integration testing.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/310ba437-80f5-4b82-9c6a-e42ddb588d65) and start prompting.
+**Who this is for & Problem Statement**
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Primary users**: Deaf and hard-of-hearing people who need real-time access to spoken content and an easier way to communicate with non-signing people.
+- **Secondary users**: Educators, interpreters, caregivers, and content creators who want to make learning materials accessible and provide sign-language explanations alongside text/audio.
+- **Developers & Integrators**: Teams building accessible products who need a demo-ready front-end and integration patterns for REST/WS-based inference services.
 
-**Use your preferred IDE**
+Problem this project addresses:
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- Communication gap: spoken and written content is often inaccessible to sign-language users; this project offers realtime translation and captions to bridge that gap.
+- Accessibility in learning: many educational resources lack built-in sign-language support or live captioning; this demo shows how to integrate those features into learning platforms.
+- Latency & usability: traditional captioning can lag or miss context; streaming + partial results (WebSockets) reduce perceived latency and improve UX.
+- Privacy vs accuracy: developers often must choose between local (on-device) inference for privacy and server-side inference for accuracy/performance — this project demonstrates both approaches and how to switch between them.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Use cases:
 
-Follow these steps:
+- Live lectures or webinars that need instant captions and sign translations.
+- Online learning platforms that want to add sign-language guides and accessible UI controls.
+- Prototype and evaluation of ML models for sign recognition in research or product teams.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+**Core Features**
+- Camera-based sign detection and translation
+- Real-time speech-to-text and live captions
+- Text-to-speech and voice command interaction
+- Accessibility preferences (contrast, font-size, simplified UI)
+- Extensible architecture allowing REST or WebSocket ML backends
 
-# Step 3: Install the necessary dependencies.
-npm i
+**Infographics (static assets)**
+- Flow infographic (PNG/SVG): `/images/infographic-flow.svg`
+- Architecture map (PNG/SVG): `/images/architecture-map.svg`
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+If you prefer Mermaid diagrams, there are editable snippets below.
+
+---
+
+**Process Flow (Mermaid)** — paste into a Mermaid renderer or use the SVG above:
+
+```mermaid
+flowchart TD
+  Camera["User: Camera / Microphone"] --> Client["Client Detector (Browser)"]
+  Client -->|frames/audio| WS["WebSocket / Streaming (optional)"]
+  Client -->|REST| API["Inference API / Backend"]
+  WS --> API
+  API --> ML["ML Model / Inference Service"]
+  API --> UI["UI: Captions / Translator / Tools"]
+  UI --> User["User / Assistive Tools"]
 ```
 
-**Edit a file directly in GitHub**
+**Architecture (Mermaid)**:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```mermaid
+graph LR
+  subgraph Client
+    A[React + Vite] --> B[Sign Detector Component]
+    B --> C[Accessibility Tools]
+  end
+  A -- REST --> D[API Gateway]
+  A -- WS --> E[Streaming Gateway]
+  D --> F[Inference Service]
+  E --> F
+  F --> G[(Optional DB/Storage)]
+```
 
-**Use GitHub Codespaces**
+---
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+**Tech Stack**
+- Frontend: `React` (TypeScript) + `Vite`
+- UI: `Tailwind CSS`, custom theme in `tailwind.config.ts`
+- Realtime: WebSocket for streaming frames/partial results
+- APIs: REST endpoints for inference + optional streaming API
+- ML Options: on-device (WASM/WebNN) or server-side inference (Python/TF/PyTorch)
+- Tooling: `npm`/`pnpm`/`bun`, `ESLint`, TypeScript
 
-## What technologies are used for this project?
+**APIs & WebSocket Integration**
+- REST Inference: call `POST /api/infer` with image/frame or feature payload.
+- Streaming: connect to `wss://...` for low-latency frame/partial transcription streaming.
+- Typical REST payloads:
 
-This project is built with:
+```http
+POST /api/infer
+Content-Type: application/json
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+{
+  "type": "frame",          # or "audio"
+  "payload": "<base64-frame>"
+}
+```
 
-## How can I deploy this project?
+WebSocket events are JSON messages for start/partial/final results and control events.
 
-Simply open [Lovable](https://lovable.dev/projects/310ba437-80f5-4b82-9c6a-e42ddb588d65) and click on Share -> Publish.
+Security: use a bearer token or signed URL in production for both REST and WS.
 
-## Can I connect a custom domain to my Lovable project?
+**What’s in the Repo (high level)**
+- `src/components/` — UI, `SignLanguageDetector.tsx`, `SignLanguageTranslator.tsx`, `AdvancedSignLanguageDetector.tsx`
+- `src/components/tools/` — `SpeechToText.tsx`, `TextToSpeech.tsx`, `LiveCaptioning.tsx`, `TextSimplifier.tsx`, `VoiceCommands.tsx`, `AccessibilitySettings.tsx`
+- `src/components/ui/` — primitive components used throughout app
+- `src/hooks/` — `use-mobile.tsx`, `use-toast.ts`
+- `src/lib/` — shared utilities
+- `src/pages/` — `Demo.tsx`, `SignLanguagePage.tsx`, `AssistiveTools.tsx`
+- `public/images/` — static infographics (the two SVG placeholders added alongside this README)
 
-Yes, you can!
+**Color Palette & Accessibility**
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Ensure WCAG contrast compliance for text overlays—tweak colors in `tailwind.config.ts` if needed.
+**Color Palette & Accessibility**
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- Primary: `#7C3AED` (indigo-violet)
+- Accent: `#06B6D4` (teal)
+- Success: `#10B981` (green)
+- Danger: `#EF4444` (red)
+- Background: `#0F172A` (dark) / `#FFFFFF` (light mode)
+
+Ensure WCAG contrast compliance for text overlays—tweak colors in `tailwind.config.ts` if needed.
+
+
+**Run Locally**
+1. Install dependencies (choose one):
+
+```powershell
+npm install
+# or
+pnpm install
+# or (if you use bun)
+bun install
+```
+
+2. Start dev server:
+
+```powershell
+npm run dev
+# or
+pnpm dev
+# or
+bun run dev
+```
+
+3. Open the URL Vite prints (usually `http://localhost:5173`).
+
+**Environment variables (example)**
+Add a `.env` in project root with Vite-style variables:
+
+```text
+VITE_API_URL=https://api.example.com
+VITE_WS_URL=wss://stream.example.com
+```
+
+**Adding or Replacing Infographics**
+- Replace `public/images/infographic-flow.svg` and `public/images/architecture-map.svg` with designed assets.
+- You can also export higher-res PNGs and reference them from README or pages.
+
+---
+
+**Usage Notes & Best Practices**
+- For privacy-sensitive usages, prefer on-device inference (WASM) to avoid sending raw frames.
+- Use partial-results via WebSocket to improve perceived latency for captions.
+- Provide clear UI controls to pause streaming and to opt-out of camera sharing.
+
+**Contributing**
+- Fork, branch, implement changes, and open a PR.
+- Add tests for new logic and run the dev server locally to verify UX.
+
+---
+
+`SIGN_LANGUAGE_README.md` updated to include visual assets and developer-focused instructions.
+
