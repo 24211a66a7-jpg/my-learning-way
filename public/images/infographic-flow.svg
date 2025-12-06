@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400">
+  <rect width="1200" height="400" fill="#0f172a" rx="12"/>
+  <g font-family="Segoe UI, Roboto, Arial" fill="#ffffff" font-size="16">
+    <rect x="40" y="40" width="240" height="80" rx="8" fill="#06b6d4" />
+    <text x="160" y="90" text-anchor="middle" fill="#031024" font-weight="700">User Camera / Mic</text>
+
+    <rect x="340" y="40" width="260" height="80" rx="8" fill="#7c3aed" />
+    <text x="470" y="90" text-anchor="middle" fill="#ffffff" font-weight="700">Client Detector</text>
+
+    <rect x="680" y="40" width="240" height="80" rx="8" fill="#ef4444" />
+    <text x="800" y="90" text-anchor="middle" fill="#ffffff" font-weight="700">Inference API / Model</text>
+
+    <rect x="940" y="40" width="200" height="80" rx="8" fill="#10b981" />
+    <text x="1040" y="90" text-anchor="middle" fill="#031024" font-weight="700">UI / Captions</text>
+
+    <defs>
+      <marker id="arrow" markerWidth="10" markerHeight="10" refX="6" refY="5" orient="auto">
+        <path d="M0,0 L10,5 L0,10 z" fill="#fff"/>
+      </marker>
+    </defs>
+
+    <line x1="280" y1="80" x2="340" y2="80" stroke="#94a3b8" stroke-width="3" marker-end="url(#arrow)" />
+    <line x1="600" y1="80" x2="680" y2="80" stroke="#94a3b8" stroke-width="3" marker-end="url(#arrow)" />
+    <line x1="920" y1="80" x2="940" y2="80" stroke="#94a3b8" stroke-width="3" marker-end="url(#arrow)" />
+  </g>
+</svg>

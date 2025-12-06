@@ -1,234 +1,209 @@
-# Sign Language Translator Integration
+<!--
+  New comprehensive README for the Sign Language demo.
+  Includes inline Mermaid diagrams and references to simple SVG infographics
+  placed in `public/images/`.
+-->
 
-This project now includes a comprehensive sign language translator that integrates with your learning resources application. The translator provides real-time text-to-sign language conversion with visual guides and accessibility features.
+# Assistive Sign Language — Demo & Project Overview
 
-## 🚀 Features
+Demo: https://assited.netlify.app/
 
-### Core Functionality
-- **Text-to-Sign Translation**: Convert any text into sign language instructions
-- **Multiple Sign Languages**: Support for ASL, BSL, ISL, AUSLAN, and more
-- **Visual Learning**: Step-by-step hand shape and movement guides
-- **Audio Support**: Audio descriptions and pronunciation guides
-- **Accessibility First**: Designed for all learners including those with disabilities
+Welcome — this website the demo version of the Assistive Sign Language app: its purpose, architecture, usage, tech stack, APIs and realtime integrations, and visual infographics. The README intentionally includes both Mermaid diagrams (for quick edit/view) and SVG placeholders (in `public/images/`) that you can replace with designed assets.
 
-### Advanced Features
-- **Real-time Translation**: Instant conversion with confidence scoring
-- **Playback Controls**: Play, pause, and control translation speed
-- **Export Options**: Copy translations or download as JSON
-- **API Integration**: RESTful API for backend processing
-- **Offline Mode**: Fallback functionality when backend is unavailable
+**Quick Links**
+- Demo: `https://assited.netlify.app/`
+- Live infographics: `/images/infographic-flow.svg` and `/images/architecture-map.svg`
 
-## 📋 Prerequisites
+**Goals of this Demo**
+- Demonstrate real-time sign-language detection and translation.
+- Showcase accessibility-first assistive tools: captioning, TTS, STT, voice commands, and text simplification.
+- Provide a production-like UI for stakeholder review and integration testing.
 
-### Python Dependencies
-```bash
-pip install sign-language-translator
-pip install flask flask-cors mediapipe opencv-python numpy requests python-dotenv
-```
+**Who this is for & Problem Statement**
 
-### Node.js Dependencies
-```bash
-npm install
-# or
-yarn install
-```
+- **Primary users**: Deaf and hard-of-hearing people who need real-time access to spoken content and an easier way to communicate with non-signing people.
+- **Secondary users**: Educators, interpreters, caregivers, and content creators who want to make learning materials accessible and provide sign-language explanations alongside text/audio.
+- **Developers & Integrators**: Teams building accessible products who need a demo-ready front-end and integration patterns for REST/WS-based inference services.
 
-## 🛠️ Setup Instructions
+Problem this project addresses:
 
-### 1. Backend Setup
+- Communication gap: spoken and written content is often inaccessible to sign-language users; this project offers realtime translation and captions to bridge that gap.
+- Accessibility in learning: many educational resources lack built-in sign-language support or live captioning; this demo shows how to integrate those features into learning platforms.
+- Latency & usability: traditional captioning can lag or miss context; streaming + partial results (WebSockets) reduce perceived latency and improve UX.
+- Privacy vs accuracy: developers often must choose between local (on-device) inference for privacy and server-side inference for accuracy/performance — this project demonstrates both approaches and how to switch between them.
 
-1. **Navigate to the backend directory:**
-   ```bash
-   cd backend
-   ```
+Use cases:
 
-2. **Install Python dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
+- Live lectures or webinars that need instant captions and sign translations.
+- Online learning platforms that want to add sign-language guides and accessible UI controls.
+- Prototype and evaluation of ML models for sign recognition in research or product teams.
 
-3. **Start the backend server:**
-   ```bash
-   python start_server.py
-   ```
-   
-   The server will start on `http://localhost:5001`
 
-### 2. Frontend Setup
+**Core Features**
+- Camera-based sign detection and translation
+- Real-time speech-to-text and live captions
+- Text-to-speech and voice command interaction
+- Accessibility preferences (contrast, font-size, simplified UI)
+- Extensible architecture allowing REST or WebSocket ML backends
 
-1. **Start the React development server:**
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   ```
+**Infographics (static assets)**
+- Flow infographic (PNG/SVG): `/images/infographic-flow.svg`
+- Architecture map (PNG/SVG): `/images/architecture-map.svg`
 
-2. **Access the sign language translator:**
-   - Navigate to `/sign-language` in your browser
-   - Or access it through the Learning Resources page
-
-## 🎯 Usage Guide
-
-### Basic Translation
-
-1. **Enter Text**: Type or paste the text you want to translate
-2. **Select Language**: Choose your target sign language (ASL, BSL, ISL, etc.)
-3. **Click Translate**: The system will convert your text to sign language
-4. **View Results**: See step-by-step sign instructions with visual guides
-
-### Advanced Features
-
-#### Playback Controls
-- **Play**: Start the sign sequence animation
-- **Pause**: Stop the current animation
-- **Reset**: Return to the beginning
-- **Speed Control**: Adjust playback speed (Fast/Normal/Slow)
-
-#### Export Options
-- **Copy**: Copy translation instructions to clipboard
-- **Download**: Save translation as JSON file for offline use
-
-#### Confidence Indicators
-- **Green**: High confidence (80%+)
-- **Yellow**: Medium confidence (60-79%)
-- **Red**: Low confidence (<60%)
-
-## 🔧 API Endpoints
-
-### Translation API
-```http
-POST /api/translate
-Content-Type: application/json
-
-{
-  "text": "Hello, how are you?",
-  "language": "asl"
-}
-```
-
-### Languages API
-```http
-GET /api/languages
-```
-
-### Health Check
-```http
-GET /api/health
-```
-
-### Sign Details
-```http
-GET /api/sign/<word>
-```
-
-## 📁 File Structure
-
-```
-├── src/
-│   ├── components/
-│   │   └── SignLanguageTranslator.tsx    # Main translator component
-│   └── pages/
-│       └── SignLanguagePage.tsx          # Dedicated sign language page
-├── backend/
-│   ├── sign_language_service.py         # Flask API service
-│   ├── start_server.py                  # Server startup script
-│   └── requirements.txt                 # Python dependencies
-└── SIGN_LANGUAGE_README.md              # This file
-```
-
-## 🎨 Integration with Learning Resources
-
-The sign language translator is fully integrated with your learning resources system:
-
-### Age-Based Sections
-- **Primary School (1st-5th)**: Basic sign language concepts
-- **Middle School (5th-10th)**: Intermediate sign language skills
-- **Intermediate (11th-12th)**: Advanced sign language learning
-- **Higher Education**: Professional sign language courses
-
-### Accessibility Features
-- **Visual Aids**: High contrast demonstrations
-- **Audio Descriptions**: Voice guidance for each sign
-- **Keyboard Navigation**: Full keyboard accessibility
-- **Screen Reader Support**: Compatible with assistive technologies
-
-## 🔍 Troubleshooting
-
-### Common Issues
-
-1. **Backend Connection Failed**
-   - Ensure the Python server is running on port 5001
-   - Check if all dependencies are installed
-   - Verify firewall settings
-
-2. **Translation Not Working**
-   - Check browser console for errors
-   - Verify API endpoints are accessible
-   - Ensure text input is not empty
-
-3. **Sign Language Library Issues**
-   - The system will fall back to mock data if the library is unavailable
-   - Check Python environment and dependencies
-   - Verify sign-language-translator installation
-
-### Debug Mode
-
-Enable debug mode by setting environment variables:
-```bash
-export FLASK_DEBUG=1
-export FLASK_ENV=development
-```
-
-## 🚀 Deployment
-
-### Production Setup
-
-1. **Backend Deployment:**
-   ```bash
-   # Use a production WSGI server
-   pip install gunicorn
-   gunicorn -w 4 -b 0.0.0.0:5001 sign_language_service:app
-   ```
-
-2. **Frontend Deployment:**
-   ```bash
-   npm run build
-   # Deploy the dist/ folder to your web server
-   ```
-
-3. **Environment Variables:**
-   ```bash
-   export API_BASE_URL=https://your-api-domain.com
-   export NODE_ENV=production
-   ```
-
-## 🤝 Contributing
-
-To contribute to the sign language translator:
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## 📞 Support
-
-For issues or questions:
-- Check the troubleshooting section
-- Review the API documentation
-- Test with the health check endpoint
-- Ensure all dependencies are properly installed
-
-## 🔮 Future Enhancements
-
-Planned features for future releases:
-- **Video Integration**: Real sign language video demonstrations
-- **Machine Learning**: Improved translation accuracy
-- **Mobile App**: Native mobile application
-- **Offline Mode**: Full offline functionality
-- **Community Features**: User-generated content and sharing
+If you prefer Mermaid diagrams, there are editable snippets below.
 
 ---
 
-**Note**: The sign language translator uses the `sign-language-translator` Python library. If the library is not available, the system will operate in mock mode with placeholder data for demonstration purposes.
+**Process Flow (Mermaid)** — paste into a Mermaid renderer or use the SVG above:
+
+```mermaid
+flowchart TD
+  Camera["User: Camera / Microphone"] --> Client["Client Detector (Browser)"]
+  Client -->|frames/audio| WS["WebSocket / Streaming (optional)"]
+  Client -->|REST| API["Inference API / Backend"]
+  WS --> API
+  API --> ML["ML Model / Inference Service"]
+  API --> UI["UI: Captions / Translator / Tools"]
+  UI --> User["User / Assistive Tools"]
+```
+
+**Architecture (Mermaid)**:
+
+```mermaid
+graph LR
+  subgraph Client
+    A[React + Vite] --> B[Sign Detector Component]
+    B --> C[Accessibility Tools]
+  end
+  A -- REST --> D[API Gateway]
+  A -- WS --> E[Streaming Gateway]
+  D --> F[Inference Service]
+  E --> F
+  F --> G[(Optional DB/Storage)]
+```
+
+---
+
+**Tech Stack**
+- Frontend: `React` (TypeScript) + `Vite`
+- UI: `Tailwind CSS`, custom theme in `tailwind.config.ts`
+- Realtime: WebSocket for streaming frames/partial results
+- APIs: REST endpoints for inference + optional streaming API
+- ML Options: on-device (WASM/WebNN) or server-side inference (Python/TF/PyTorch)
+- Tooling: `npm`/`pnpm`/`bun`, `ESLint`, TypeScript
+
+**APIs & WebSocket Integration**
+- REST Inference: call `POST /api/infer` with image/frame or feature payload.
+- Streaming: connect to `wss://...` for low-latency frame/partial transcription streaming.
+- Typical REST payloads:
+
+```http
+POST /api/infer
+Content-Type: application/json
+
+{
+  "type": "frame",          # or "audio"
+  "payload": "<base64-frame>"
+}
+```
+
+WebSocket events are JSON messages for start/partial/final results and control events.
+
+Security: use a bearer token or signed URL in production for both REST and WS.
+
+**What’s in the Repo (high level)**
+- `src/components/` — UI, `SignLanguageDetector.tsx`, `SignLanguageTranslator.tsx`, `AdvancedSignLanguageDetector.tsx`
+- `src/components/tools/` — `SpeechToText.tsx`, `TextToSpeech.tsx`, `LiveCaptioning.tsx`, `TextSimplifier.tsx`, `VoiceCommands.tsx`, `AccessibilitySettings.tsx`
+- `src/components/ui/` — primitive components used throughout app
+- `src/hooks/` — `use-mobile.tsx`, `use-toast.ts`
+- `src/lib/` — shared utilities
+- `src/pages/` — `Demo.tsx`, `SignLanguagePage.tsx`, `AssistiveTools.tsx`
+- `public/images/` — static infographics (the two SVG placeholders added alongside this README)
+
+**Color Palette & Accessibility**
+
+Ensure WCAG contrast compliance for text overlays—tweak colors in `tailwind.config.ts` if needed.
+**Color Palette & Accessibility**
+
+- Primary: `#7C3AED` (indigo-violet)
+- Accent: `#06B6D4` (teal)
+- Success: `#10B981` (green)
+- Danger: `#EF4444` (red)
+- Background: `#0F172A` (dark) / `#FFFFFF` (light mode)
+
+Ensure WCAG contrast compliance for text overlays—tweak colors in `tailwind.config.ts` if needed.
+
+**Color Swatches**
+
+Below are quick visual swatches you can use for UI reference. These are small inline boxes with hex codes — keep them here as a quick style guide. If your renderer strips inline styles, the hex codes are provided next to each swatch.
+
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;margin-bottom:12px">
+  <div style="width:160px;padding:10px;border-radius:8px;background:#7C3AED;color:#ffffff;text-align:center;font-weight:700">Primary<br/><small style="font-weight:600">#7C3AED</small></div>
+  <div style="width:160px;padding:10px;border-radius:8px;background:#06B6D4;color:#031024;text-align:center;font-weight:700">Accent<br/><small style="font-weight:600">#06B6D4</small></div>
+  <div style="width:160px;padding:10px;border-radius:8px;background:#10B981;color:#031024;text-align:center;font-weight:700">Success<br/><small style="font-weight:600">#10B981</small></div>
+  <div style="width:160px;padding:10px;border-radius:8px;background:#EF4444;color:#ffffff;text-align:center;font-weight:700">Danger<br/><small style="font-weight:600">#EF4444</small></div>
+  <div style="width:160px;padding:10px;border-radius:8px;background:#0F172A;color:#ffffff;text-align:center;font-weight:700">Dark BG<br/><small style="font-weight:600">#0F172A</small></div>
+  <div style="width:160px;padding:10px;border-radius:8px;background:#FFFFFF;color:#031024;text-align:center;font-weight:700;border:1px solid #e5e7eb">Light BG<br/><small style="font-weight:600">#FFFFFF</small></div>
+</div>
+
+Fallback (plain list):
+
+- Primary: `#7C3AED`
+- Accent: `#06B6D4`
+- Success: `#10B981`
+- Danger: `#EF4444`
+- Dark background: `#0F172A`
+- Light background: `#FFFFFF`
+
+---
+
+**Run Locally**
+1. Install dependencies (choose one):
+
+```powershell
+npm install
+# or
+pnpm install
+# or (if you use bun)
+bun install
+```
+
+2. Start dev server:
+
+```powershell
+npm run dev
+# or
+pnpm dev
+# or
+bun run dev
+```
+
+3. Open the URL Vite prints (usually `http://localhost:5173`).
+
+**Environment variables (example)**
+Add a `.env` in project root with Vite-style variables:
+
+```text
+VITE_API_URL=https://api.example.com
+VITE_WS_URL=wss://stream.example.com
+```
+
+**Adding or Replacing Infographics**
+- Replace `public/images/infographic-flow.svg` and `public/images/architecture-map.svg` with designed assets.
+- You can also export higher-res PNGs and reference them from README or pages.
+
+---
+
+**Usage Notes & Best Practices**
+- For privacy-sensitive usages, prefer on-device inference (WASM) to avoid sending raw frames.
+- Use partial-results via WebSocket to improve perceived latency for captions.
+- Provide clear UI controls to pause streaming and to opt-out of camera sharing.
+
+**Contributing**
+- Fork, branch, implement changes, and open a PR.
+- Add tests for new logic and run the dev server locally to verify UX.
+
+---
+
+`SIGN_LANGUAGE_README.md` updated to include visual assets and developer-focused instructions.
+
